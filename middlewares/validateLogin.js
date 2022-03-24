@@ -1,10 +1,12 @@
+//  VALIDAÇÃO DO CAMPO EMAIL
+
 function validateEmail(req, res, next) {
   const { email } = req.body;
 
   if (!email || email === '') {
     return res.status(400).json({ message: 'O campo "email" é obrigatório' });
   }
-  // Validação de email atráves de Regex : https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
+  // Validação de email atráves de Regex : https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail - feito levando em consideração a necessidade de colocar a ultima parte do REGEX (\.[a-z]+) dentro do parêntese.
   const emailValidation = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
   if (!emailValidation.test(email)) {
@@ -13,6 +15,8 @@ function validateEmail(req, res, next) {
 
   next();
 }
+
+// VALIDAÇÃO DO CAMPO PASSWORD
 
 function validatePassword(req, res, next) {
   const { password } = req.body;
