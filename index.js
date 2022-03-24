@@ -30,6 +30,17 @@ app.get('/talker', async (_req, res) => {
   res.status(200).json(talkers);
 });
 
+app.get('/talker/search', validateToken, async (req, res) => {
+  const { search } = req.query;
+  const talkers = await getTalkers();
+  const searchTalker = talkers.filter((t) => t.name.includes(search));
+  
+  if (!search) return res.status(200).json(talkers);
+  if (search.length === 0) return res.status(200).json([]);
+
+  res.status(200).json(searchTalker);
+});
+
 app.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
   const talkers = await getTalkers();
@@ -97,5 +108,5 @@ app.delete('/talker/:id',
 });
 
 app.listen(PORT, () => {
-  console.log('Online');
+  console.log(`Rodando na porta ${PORT}`);
 });
